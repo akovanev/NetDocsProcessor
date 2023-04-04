@@ -57,11 +57,13 @@ public class GoCrazyTravelerService : GoServiceBase<CrazyTraveler>
     /// Never use it.
     /// </example>
     /// <param name="crazyTraveler"></param>
-    /// <exception cref="ArgumentNullException">ArgumentNullException.</exception>
+    /// <exception cref="InvalidOperationException">The InvalidOperationException.</exception>
+    /// <exception cref="ArgumentNullException">The ArgumentNullException.</exception>
     public GoCrazyTravelerService(GoServiceBase<CrazyTraveler>? crazyTraveler)
     {
         if (crazyTraveler is null) throw new ArgumentNullException(nameof(crazyTraveler));
         _visitedCountryList = default!;
+        if (_visitedCountryList is null) throw new InvalidOperationException();
     }
 
     /// <summary>

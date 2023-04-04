@@ -83,6 +83,26 @@ public class MemberDescription : IXmlMemberElement
     public string? Remarks { get; set; }
     
     /// <summary>
+    /// The type parameters list.
+    /// </summary>
+    public List<TypeParameterInfo>? TypeParameters { get; set; }
+    
+    /// <summary>
+    /// The parameters list.
+    /// </summary>
+    public List<ParameterInfo>? Parameters { get; set; }
+    
+    /// <summary>
+    /// The returns for the method.
+    /// </summary>
+    public string? Returns { get; set; }
+    
+    /// <summary>
+    /// The declared exceptions.
+    /// </summary>
+    public List<ExceptionInfo>? Exceptions { get; set; }
+    
+    /// <summary>
     /// The list of the related references.
     /// </summary>
     public List<PageInfo>? SeeAlso { get; set; }

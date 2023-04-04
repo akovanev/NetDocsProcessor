@@ -8,6 +8,6 @@ public class XmlTypeParameter
     [XmlAttribute("name")]
     public string? Name { get; set; }
 
-    [XmlElement("summary")]
-    public string? Summary { get; set; }
+    [XmlText]
+    public string? Text { get; set; }
 }

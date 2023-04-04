@@ -18,10 +18,10 @@ internal partial class DescriptionHelper
     {
         foreach (var memberDescription in memberDescriptions)
         {
-            var methodData = members.FirstOrDefault(m => m.Name == memberDescription.CommentId);
-            if (methodData is null) continue;
+            var memberData = members.FirstOrDefault(m => m.Name == memberDescription.CommentId);
+            if (memberData is null) continue;
             
-            memberDescription.FillBy(methodData);
+            memberDescription.FillBy(memberData);
         }
     }
 }

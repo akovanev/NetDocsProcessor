@@ -3,7 +3,7 @@ namespace Akov.NetDocsProcessor.Output;
 /// <summary>
 /// The type description for classes, interfaces, records, structs, enums and delegates.
 /// </summary>
-public class TypeDescription : IXmlMemberElement
+public class TypeDescription : IXmlMemberBaseElement
 {
     public TypeDescription()
     {
@@ -98,7 +98,12 @@ public class TypeDescription : IXmlMemberElement
     /// The remarks for the type.
     /// </summary>
     public string? Remarks { get; set; }
-    
+
+    /// <summary>
+    /// The type parameters list.
+    /// </summary>
+    public List<TypeParameterInfo>? TypeParameters { get; set; }
+
     /// <summary>
     /// The list of constructors.
     /// </summary>

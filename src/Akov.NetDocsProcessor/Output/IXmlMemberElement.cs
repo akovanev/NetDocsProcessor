@@ -1,8 +1,8 @@
 namespace Akov.NetDocsProcessor.Output;
 
-public interface IXmlMemberElement
+public interface IXmlMemberElement : IXmlMemberBaseElement
 {
-    public string? Summary { get; set; }
-    public string? Example { get; set; }
-    public string? Remarks { get; set; }
+    public string? Returns { get; set; }
+    public List<ExceptionInfo>? Exceptions { get; set; }
+    public List<ParameterInfo>? Parameters { get; set; }
 }
