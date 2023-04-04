@@ -10,4 +10,10 @@
       <DocumentationFile>bin\Debug\Akov.Chillout.xml</DocumentationFile>
     </PropertyGroup>
 
+    <ItemGroup>
+      <None Update="Examples.xml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>

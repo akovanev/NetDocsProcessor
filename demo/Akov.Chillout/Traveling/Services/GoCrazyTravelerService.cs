@@ -87,9 +87,7 @@ public class GoCrazyTravelerService : GoServiceBase<CrazyTraveler>
     /// </summary>
     protected static int Limit { get; private set; }
     
-    /// <summary>
-    /// The collection of crazy travelers.
-    /// </summary>
+    /// <include file='Examples.xml' path='examples/GoCrazyTravelerService[@name="Collection"]/*' />
     [JsonPropertyName("crazyCollection")]
     public List<CrazyTraveler>? Collection { get; set; }
         

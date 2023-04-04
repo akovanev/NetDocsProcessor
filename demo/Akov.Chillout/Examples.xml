@@ -1,0 +1,16 @@
+<examples>
+    <GoCrazyTravelerService name="Collection">
+        <summary>
+            The collection of crazy travelers.
+        </summary>
+        <example>
+            <code>
+                var service = new GoCrazyTravelerService();
+                service.Collection = default!;
+            </code>
+            <description>
+                The collection should not be null.
+            </description>
+        </example>
+    </GoCrazyTravelerService>
+</examples>
