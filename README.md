@@ -2,7 +2,7 @@
 
 ### The project is not finished yet.
 
-Unlike many libraries that produce output in predetermined HTML or Markdown formats, the NetDocsGenerator API provides a distinct approach for accessing data from an assembly and its associated XML file.
+Unlike many libraries that produce output in predetermined HTML or Markdown formats, the NetDocsProcessor API provides a distinct approach for accessing data from an assembly and its associated XML file.
 
 ```csharp
 List<NamespaceDescription> data = new DocsProcessorApi().ObtainDocumentation(
@@ -11,4 +11,4 @@ List<NamespaceDescription> data = new DocsProcessorApi().ObtainDocumentation(
     .ToList();
 ```
 
-The [demo](https://github.com/akovanev/NetDocsGenerator/blob/main/demo/Akov.NetDocGenerator.Demo/Program.cs)  illustrates how to generate documentation files in Markdown format.
+The [demo](https://github.com/akovanev/NetDocsProcessor/blob/main/demo/Akov.Chillout.Demo/Program.cs)  illustrates how to generate documentation files in Markdown format.

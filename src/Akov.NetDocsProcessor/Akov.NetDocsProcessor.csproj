@@ -12,7 +12,7 @@
         <RepositoryUrl>https://github.com/akovanev/NetDocsProcessor.git</RepositoryUrl>
         <Copyright>Oleksandr Kovanev</Copyright>
         <Company />
-        <PackageTags>Documentation;Generator;Xml</PackageTags>
+        <PackageTags>Documentation;Processor;Xml</PackageTags>
         <NeutralLanguage>en</NeutralLanguage>
         <Version>1.0.0</Version>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
