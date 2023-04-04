@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFrameworks>net7.0;net6.0;netstandard2.1</TargetFrameworks>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <Authors>Oleksandr Kovanev</Authors>
+        <Description>Obtains data from .net assemblies and generated xml documentation.</Description>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageProjectUrl>https://github.com/akovanev/NetDocsProcessor</PackageProjectUrl>
+        <RepositoryType>git</RepositoryType>
+        <RepositoryUrl>https://github.com/akovanev/NetDocsProcessor.git</RepositoryUrl>
+        <Copyright>Oleksandr Kovanev</Copyright>
+        <Company />
+        <PackageTags>Documentation;Generator;Xml</PackageTags>
+        <NeutralLanguage>en</NeutralLanguage>
+        <Version>1.0.0</Version>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <LangVersion>latestmajor</LangVersion>
+        <PackageIcon>logo.png</PackageIcon>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="logo.png" Pack="true" PackagePath="" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <InternalsVisibleTo Include="Akov.NetDocsProcessor.Tests" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.5.0" />
+      <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.4.0" />
+    </ItemGroup>
+
+</Project>

@@ -1,0 +1,23 @@
+name: NetDocsProcessor Tests
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  processor-tests:
+    name: Unit and Integration Tests 
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout GitHub Repo
+        uses: actions/checkout@v3
+      - uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '7.0.100'  
+
+      - name: Run Unit Tests
+        run: cd tests/Akov.NetDocsProcessor.Tests && dotnet test
+      - name: Run Integration Tests
+        run: cd tests/Akov.NetDocsProcessor.IntegrationTests && dotnet test

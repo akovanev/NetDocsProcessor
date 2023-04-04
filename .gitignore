@@ -1,0 +1,17 @@
+# Repo specific
+*.db
+
+# User specific
+*.suo
+*.user
+.idea/
+.vs/
+
+# Build
+[Bb]in/
+[Oo]bj/
+
+# Disk
+Thumbs.db
+Desktop.ini
+.DS_Store
