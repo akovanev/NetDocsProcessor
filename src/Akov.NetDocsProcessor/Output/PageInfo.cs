@@ -1,3 +1,5 @@
+using Akov.NetDocsProcessor.Common;
+
 namespace Akov.NetDocsProcessor.Output;
 
 /// <summary>
@@ -32,4 +34,8 @@ public class PageInfo
     
 #endif
     
+    /// <summary>
+    /// Class or Interface or Delegate etc
+    /// </summary>
+    public ElementType ElementType { get; set; }
 }

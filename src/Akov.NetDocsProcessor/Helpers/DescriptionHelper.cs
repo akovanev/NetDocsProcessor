@@ -17,13 +17,16 @@ internal partial class DescriptionHelper
             {
                 DisplayName = currentNamespace,
                 Url = currentNamespace.TrimRoot(rootNamespace),
+                ElementType = ElementType.Namespace
             }
         };
 
     public static TypeDescription CreateType(TypeInfo typeInfo, INamedTypeSymbol? symbol, PageInfo @namespace)
-        => new ()
+    {
+        var elementType = typeInfo.GetTypeElementType();
+        return new()
         {
-            ElementType = typeInfo.GetTypeElementType(),
+            ElementType = elementType,
             Name = typeInfo.Name,
             FullName = typeInfo.FullName ?? typeInfo.Name,
             CommentId = symbol?.GetDocumentationCommentId() ?? Texts.XmlCommentNotFound,
@@ -31,10 +34,13 @@ internal partial class DescriptionHelper
             {
                 DisplayName = symbol?.Name ?? typeInfo.Name,
                 Url = Path.Combine(@namespace.Url, typeInfo.GetTypeName()),
+                ElementType = elementType
             },
-            Namespace = @namespace
+            Namespace = @namespace,
+            PayloadInfo = symbol?.GetPayload() ?? new PayloadInfo()
         };
-    
+    }
+
     public static MemberDescription CreateMember(string memberName, MemberTypes memberType, ISymbol? symbol, PageInfo parent)
     {
         string GetMemberFolder()
@@ -66,7 +72,8 @@ internal partial class DescriptionHelper
             Name = memberName,
             ReturnType = symbol?.GetReturnType(),
             Parent = parent,
-            Title =  symbol?.GetShortName() 
+            Title =  symbol?.GetShortName(),
+            PayloadInfo = symbol?.GetPayload() ?? new PayloadInfo()
         };
     }
 }

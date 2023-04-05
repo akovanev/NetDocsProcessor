@@ -1,5 +1,7 @@
 using System.Collections.Immutable;
 using System.Reflection;
+using Akov.NetDocsProcessor.Input;
+using Akov.NetDocsProcessor.Output;
 using Microsoft.CodeAnalysis;
 
 namespace Akov.NetDocsProcessor.Extensions;
@@ -73,4 +75,49 @@ internal static class SymbolExtensions
         
         return null;
     }
+
+    public static PayloadInfo GetPayload(this ISymbol symbol)
+    {
+        var payload = new PayloadInfo
+        {
+            AccessLevel = symbol.DeclaredAccessibility.ToAccessLevel(),
+            IsAbstract = symbol.IsAbstract,
+            IsOverride = symbol.IsOverride,
+            IsSealed = symbol.IsSealed,
+            IsStatic = symbol.IsStatic,
+            IsVirtual = symbol.IsVirtual
+        };
+        
+        switch (symbol)
+        {
+            case INamedTypeSymbol type:
+                payload.IsGenericType = type.IsGenericType;
+                break;
+            case IMethodSymbol method:
+                payload.IsAsync = method.IsAsync;
+                payload.IsExtensionMethod = method.IsExtensionMethod;
+                payload.IsGenericMethod = method.IsGenericMethod;
+                payload.IsReadOnlyMethod = method.IsReadOnly;
+                break;
+            case IPropertySymbol property:
+                payload.HasGetMethod = property.GetMethod is not null;
+                payload.HasSetMethod = property.SetMethod is not null;
+                payload.IsIndexer = property.IsIndexer;
+                payload.IsRequired = property.IsRequired;
+                break;
+        }
+
+        return payload;
+    }
+
+    private static AccessLevel ToAccessLevel(this Accessibility accessibility)
+        => accessibility switch
+        {
+            Accessibility.Public => AccessLevel.Public,
+            Accessibility.Internal => AccessLevel.Internal,
+            Accessibility.Protected => AccessLevel.Protected,
+            Accessibility.ProtectedAndInternal => AccessLevel.ProtectedInternal,
+            Accessibility.Private => AccessLevel.Private,
+            _ => AccessLevel.Private
+        };
 }

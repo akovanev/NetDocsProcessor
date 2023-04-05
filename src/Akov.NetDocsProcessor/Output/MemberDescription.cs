@@ -33,6 +33,11 @@ public class MemberDescription : IXmlMemberElement
     /// </summary>
     public required PageInfo Parent { get; set; }
     
+    /// <summary>
+    /// The payload.
+    /// </summary>
+    public required PayloadInfo PayloadInfo { get; set; }
+    
 #else
 
     /// <summary>
@@ -59,6 +64,11 @@ public class MemberDescription : IXmlMemberElement
     /// The reference to the parent page info. This can be a class, struct, record or interface. 
     /// </summary>
     public PageInfo Parent { get; set; } = default!;
+    
+    /// <summary>
+    /// The payload.
+    /// </summary>
+    public PayloadInfo PayloadInfo { get; set; } = default!;
 
 #endif
     
@@ -111,4 +121,6 @@ public class MemberDescription : IXmlMemberElement
     /// The list of the related references.
     /// </summary>
     public List<PageInfo>? SeeAlso { get; set; }
+
+    
 }

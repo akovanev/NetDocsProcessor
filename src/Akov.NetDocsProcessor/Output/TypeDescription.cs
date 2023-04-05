@@ -1,3 +1,5 @@
+using Akov.NetDocsProcessor.Common;
+
 namespace Akov.NetDocsProcessor.Output;
 
 /// <summary>
@@ -15,11 +17,6 @@ public class TypeDescription : IXmlMemberBaseElement
 
 #if NET7_0_OR_GREATER
     
-    /// <summary>
-    /// The main page element e.g. `Class`, `Interface`, `Record` etc. 
-    /// </summary>
-    public required string ElementType { get; set; }
-
     /// <summary>
     /// The type name.
     /// </summary>
@@ -44,13 +41,13 @@ public class TypeDescription : IXmlMemberBaseElement
     /// The reference to the namespace page info.
     /// </summary>
     public required PageInfo Namespace { get; set; }
+    
+    /// <summary>
+    /// The payload.
+    /// </summary>
+    public required PayloadInfo PayloadInfo { get; set; }
 
 #else
-
-    /// <summary>
-    /// The main page element e.g. `Class`, `Interface`, `Record` etc. 
-    /// </summary>
-    public string ElementType { get; set; } = default!;
     
     /// <summary>
     /// The type name.
@@ -76,8 +73,18 @@ public class TypeDescription : IXmlMemberBaseElement
     /// The reference to the namespace page info.
     /// </summary>
     public PageInfo Namespace { get; set; } = default!;
+    
+    /// <summary>
+    /// The payload.
+    /// </summary>
+    public PayloadInfo PayloadInfo { get; set; } = default!;
 
 #endif
+    
+    /// <summary>
+    /// The main page element e.g. `Class`, `Interface`, `Record` etc. 
+    /// </summary>
+    public ElementType ElementType { get; set; }
     
     /// <summary>
     /// The title for the type.

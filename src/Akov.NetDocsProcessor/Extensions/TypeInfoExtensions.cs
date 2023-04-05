@@ -19,7 +19,7 @@ internal static partial class TypeInfoExtensions
     }
     
     // Record structs will be defined as structs.
-    public static string GetTypeElementType(this TypeInfo typeInfo)
+    public static ElementType GetTypeElementType(this TypeInfo typeInfo)
     {
         if (typeof(Delegate).IsAssignableFrom(typeInfo))
             return ElementType.Delegate;

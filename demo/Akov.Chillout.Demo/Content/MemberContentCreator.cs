@@ -6,16 +6,15 @@ using Akov.NetDocsProcessor.Output;
 
 namespace Akov.Chillout.Demo.Content;
 
-public class MemberContentCreator
+public static class MemberContentCreator
 {
     public static string Create(MemberDescription description)
     {
         var builder = new StringBuilder();
-        string returnType = description.ReturnType is not null ? $"{description.ReturnType.GetAliasOrName()} " : "";
 
         builder
             .AppendLine(Format.H1(description.Title ?? description.Self.DisplayName))
-            .AppendLine(Format.CodeBlock($"{returnType}{description.Self.DisplayName}"))
+            .AppendLine(Format.CodeBlock(description.PayloadInfo.GetFullNameWithSignature(description.Self.DisplayName, description.Parent.ElementType, description.ReturnType)))
             .AppendLine(description.Summary?.ToMarkdownText())
             .AppendLine()
             .AppendLine(Format.Italic(description.Remarks?.ToMarkdownText()))

@@ -1,3 +1,5 @@
+using Akov.NetDocsProcessor.Common;
+
 namespace Akov.NetDocsProcessor.Output;
 
 /// <summary>
@@ -22,7 +24,7 @@ public class NamespaceDescription
     
 #endif
 
-    public string ElementType => Common.ElementType.Namespace;
+    public ElementType ElementType => ElementType.Namespace;
     
     /// <summary>
     /// The list of type descriptions.
