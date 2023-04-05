@@ -1,6 +1,6 @@
 # NetDocsProcessor
 
-### The project is not finished yet.
+#### *The project is not finished yet.*
 
 Unlike many libraries that produce output in predetermined HTML or Markdown formats, the NetDocsProcessor API provides a distinct approach for accessing data from an assembly and its associated XML file.
 
@@ -12,3 +12,15 @@ List<NamespaceDescription> data = new DocsProcessorApi().ObtainDocumentation(
 ```
 
 The [demo](https://github.com/akovanev/NetDocsProcessor/blob/main/demo/Akov.Chillout.Demo/Program.cs)  illustrates how to generate documentation files in Markdown format.
+
+### The list of supported xml tags
+
+* `<code>` - should be inside `<example>`.
+* `<example>`
+* `<exception>`
+* `<include>`
+* `<remarks>` 
+* `<returns>`
+* `<param>`
+* `<summary>`
+* `<typeparam>`
