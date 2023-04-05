@@ -48,23 +48,11 @@ internal partial class DescriptionHelper
                 ? "properties"
                 : $"{memberType.ToString().ToLower()}s";
 
-        string? GetDisplayName()
-        {
-            string? symbolAsString = symbol?.ToString();
-            if (symbolAsString is null) return null;
-
-            // Remove namespaces and concat the substrings
-            return string.Concat(
-                Regex.Split(symbolAsString, @"(\(|\s|\)|>|<)")
-                    .Where(s => s != String.Empty)
-                    .Select(str => str.TrimBeforeLast()));
-        }
-
         return new()
         {
             Self = new PageInfo
             {
-                DisplayName = GetDisplayName() ?? memberName,
+                DisplayName = symbol.GetDisplayName() ?? memberName,
                 Url = Path.Combine(parent.Url, GetMemberFolder(), memberName),
             },
             CommentId = symbol?.GetDocumentationCommentId() ?? Texts.XmlCommentNotFound,

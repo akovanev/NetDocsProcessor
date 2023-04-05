@@ -1,5 +1,6 @@
 using System.Collections.Immutable;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using Akov.NetDocsProcessor.Input;
 using Akov.NetDocsProcessor.Output;
 using Microsoft.CodeAnalysis;
@@ -74,6 +75,38 @@ internal static class SymbolExtensions
         }
         
         return null;
+    }
+    
+    public static string? GetDisplayName(this ISymbol? symbol)
+    {
+        string AddParametersIfMethod(string symbolAsString)
+        {
+            if (symbol!.Kind != SymbolKind.Method) return symbolAsString;
+            
+            var method = (IMethodSymbol)symbol;
+            if (method.Parameters.Length == 0) return symbolAsString;
+            
+            var parametersMatch = Regex.Match(symbolAsString, @"\((.*?)\)");
+            if (parametersMatch.Success)
+            {
+                symbolAsString = symbolAsString.Replace(
+                    parametersMatch.Groups[1].Value,
+                    string.Join(", ", method.Parameters.Select(m => m.ToString())));
+            }
+
+            return symbolAsString;
+        }
+
+        string? symbolAsString = symbol?.ToString();
+        if (symbolAsString is null) return null;
+
+        symbolAsString = AddParametersIfMethod(symbolAsString);
+
+        // Remove namespaces and concat the substrings
+        return string.Concat(
+            Regex.Split(symbolAsString, @"(\(|\s|\)|>|<)")
+                .Where(s => s != String.Empty)
+                .Select(str => str.TrimBeforeLast()));
     }
 
     public static PayloadInfo GetPayload(this ISymbol symbol)
