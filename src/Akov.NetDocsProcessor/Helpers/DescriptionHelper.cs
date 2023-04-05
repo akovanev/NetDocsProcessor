@@ -64,7 +64,7 @@ internal partial class DescriptionHelper
             CommentId = symbol?.GetDocumentationCommentId() ?? Texts.XmlCommentNotFound,
             MemberType = memberType.ToString(),
             Name = memberName,
-            ReturnType = symbol!.GetReturnType(),
+            ReturnType = symbol?.GetReturnType(),
             Parent = parent
         };
     }

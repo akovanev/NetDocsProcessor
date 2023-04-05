@@ -1,4 +1,5 @@
 using System.Text;
+using Akov.Chillout.Demo.Helpers;
 using Akov.Chillout.Demo.Markdown;
 using Akov.NetDocsProcessor.Output;
 
@@ -16,7 +17,7 @@ public class NamespaceContentCreator
 
         foreach (var type in description.Types.OrderBy(t => t.Self.DisplayName))
         {
-            builder.Append(Table.AddRow(Format.Url($"{type.Self.Url}.md",type.Self.DisplayName), type.Summary ?? ""));
+            builder.Append(Table.AddRow(Format.Url($"{type.Self.Url}.md",type.Self.DisplayName), type.Summary?.WithoutNewLines() ?? ""));
         }
 
         builder.AppendLine(Format.Url("index.md", "index.md"));

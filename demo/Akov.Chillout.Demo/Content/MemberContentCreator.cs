@@ -1,4 +1,5 @@
 using System.Text;
+using Akov.Chillout.Demo.Helpers;
 using Akov.Chillout.Demo.Markdown;
 using Akov.NetDocsProcessor.Extensions;
 using Akov.NetDocsProcessor.Output;
@@ -13,7 +14,7 @@ public class MemberContentCreator
 
         builder.AppendLine(Format.H1(description.Self.DisplayName));
         
-        string returnType = description.ReturnType is not null ? $"{description.ReturnType.ToLower()} " : "";
+        string returnType = description.ReturnType is not null ? $"{description.ReturnType.GetAliasOrName()} " : "";
         builder.AppendLine(Format.CodeBlock($"{returnType}{description.Self.DisplayName}"));
 
         builder.AppendLine(description.Summary?.ToMarkdownText());

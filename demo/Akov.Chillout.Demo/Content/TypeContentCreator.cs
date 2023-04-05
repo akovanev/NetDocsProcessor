@@ -1,4 +1,5 @@
 using System.Text;
+using Akov.Chillout.Demo.Helpers;
 using Akov.Chillout.Demo.Markdown;
 using Akov.NetDocsProcessor.Extensions;
 using Akov.NetDocsProcessor.Output;
@@ -53,9 +54,9 @@ public class TypeContentCreator
         
         foreach (var member in members)
         {
-            string returnType = member.ReturnType is not null ? $"{Format.Italic(member.ReturnType.ToLower())}  " : ""; 
+            string returnType = member.ReturnType is not null ? $"{Format.Italic(member.ReturnType.GetAliasOrName()!)}  " : ""; 
             string relativePath = Path.Combine(relativeParentUrl, member.Self.Url.TrimRoot(member.Parent.Url));
-            builder.Append(Table.AddRow($"{returnType}{Format.Url($"{relativePath}.md",member.Self.DisplayName)}", member.Summary ?? ""));
+            builder.Append(Table.AddRow($"{returnType}{Format.Url($"{relativePath}.md",member.Self.DisplayName)}", member.Summary?.WithoutNewLines() ?? ""));
         }
 
         builder.AppendLine();
