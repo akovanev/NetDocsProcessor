@@ -46,12 +46,29 @@ internal static class SymbolExtensions
             case SymbolKind.Method:
                 var method = (IMethodSymbol)symbol;
                 if (method.MethodKind != MethodKind.Constructor)
-                    return ((IMethodSymbol)symbol).ReturnType.Name;
+                    return method.ReturnType.Name;
                 break;
             case SymbolKind.Property:
                 return ((IPropertySymbol)symbol).Type.Name;
             case SymbolKind.Event:
                 return ((IEventSymbol)symbol).Type.Name;
+        }
+        
+        return null;
+    }
+    
+    public static string? GetShortName(this ISymbol symbol)
+    {
+        switch (symbol.Kind)
+        {
+            case SymbolKind.Method:
+                var method = (IMethodSymbol)symbol;
+                return method.MethodKind == MethodKind.Constructor 
+                    ? method.ContainingType.Name 
+                    : symbol.Name;
+            case SymbolKind.Property:
+            case SymbolKind.Event:
+                return symbol.Name;
         }
         
         return null;

@@ -65,7 +65,8 @@ internal partial class DescriptionHelper
             MemberType = memberType.ToString(),
             Name = memberName,
             ReturnType = symbol?.GetReturnType(),
-            Parent = parent
+            Parent = parent,
+            Title =  symbol?.GetShortName() 
         };
     }
 }

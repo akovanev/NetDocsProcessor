@@ -14,10 +14,11 @@ public class MemberContentCreator
         string returnType = description.ReturnType is not null ? $"{description.ReturnType.GetAliasOrName()} " : "";
 
         builder
-            .AppendLine(Format.H1(description.Self.DisplayName))
+            .AppendLine(Format.H1(description.Title ?? description.Self.DisplayName))
             .AppendLine(Format.CodeBlock($"{returnType}{description.Self.DisplayName}"))
             .AppendLine(description.Summary?.ToMarkdownText())
-            .AppendLine().AppendLine(Format.Italic(description.Remarks?.ToMarkdownText()))
+            .AppendLine()
+            .AppendLine(Format.Italic(description.Remarks?.ToMarkdownText()))
             .AppendLine()
             .AppendLine(description.Example?.ToMarkdownText())
             .AppendLine()
