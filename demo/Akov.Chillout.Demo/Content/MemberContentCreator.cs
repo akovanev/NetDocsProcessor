@@ -11,29 +11,19 @@ public class MemberContentCreator
     public static string Create(MemberDescription description)
     {
         var builder = new StringBuilder();
-
-        builder.AppendLine(Format.H1(description.Self.DisplayName));
-        
         string returnType = description.ReturnType is not null ? $"{description.ReturnType.GetAliasOrName()} " : "";
-        builder.AppendLine(Format.CodeBlock($"{returnType}{description.Self.DisplayName}"));
 
-        builder.AppendLine(description.Summary?.ToMarkdownText());
-        builder.AppendLine();
-        if (description.Remarks is not null)
-        {
-            builder.AppendLine(Format.Italic(description.Remarks.ToMarkdownText()));
-            builder.AppendLine();
-        }
+        builder
+            .AppendLine(Format.H1(description.Self.DisplayName))
+            .AppendLine(Format.CodeBlock($"{returnType}{description.Self.DisplayName}"))
+            .AppendLine(description.Summary?.ToMarkdownText())
+            .AppendLine().AppendLine(Format.Italic(description.Remarks?.ToMarkdownText()))
+            .AppendLine()
+            .AppendLine(description.Example?.ToMarkdownText())
+            .AppendLine()
+            .Append("Type ")
+            .AppendLine(Format.Url($"../../{description.Parent.Url.TrimBeforeLast('\\')}.md", description.Parent.DisplayName));
 
-        if (description.Example is not null)
-        {
-            builder.AppendLine(description.Example?.ToMarkdownText());
-            builder.AppendLine();
-        }
-
-        builder.Append("Type ");
-        builder.AppendLine(Format.Url($"../../{description.Parent.Url.TrimBeforeLast('\\')}.md", description.Parent.DisplayName));
-        
         return builder.ToString();
     }
 }

@@ -6,59 +6,50 @@ using Akov.NetDocsProcessor.Output;
 
 namespace Akov.Chillout.Demo.Content;
 
-public class TypeContentCreator
+public static class TypeContentCreator
 {
     public static string Create(TypeDescription description)
     {
         var builder = new StringBuilder();
-
-        builder.AppendLine(Format.H1(description.Self.DisplayName));
-
-        builder.AppendLine(description.Summary?.ToMarkdownText());
-        builder.AppendLine();
-        if (description.Remarks is not null)
-        {
-            builder.AppendLine(Format.Italic(description.Remarks.ToMarkdownText()));
-            builder.AppendLine();
-        }
-
-        if (description.Example is not null)
-        {
-            builder.AppendLine(description.Example?.ToMarkdownText());
-            builder.AppendLine();
-        }
-
         string relativeTypeUrl = description.Self.Url.TrimRoot(description.Namespace.Url);
-        AppendMembersIfAny(builder, "Constructors", relativeTypeUrl, description.Constructors);
-        AppendMembersIfAny(builder, "Methods", relativeTypeUrl, description.Methods);
-        AppendMembersIfAny(builder, "Properties", relativeTypeUrl, description.Properties);
-        AppendMembersIfAny(builder, "Events", relativeTypeUrl, description.Events);
 
-        builder.Append("Namespace ");
-        builder.AppendLine(Format.Url($"../{description.Namespace.Url}.md", description.Namespace.DisplayName));
+        builder
+            .AppendLine(Format.H1(description.Self.DisplayName))
+            .AppendLine(description.Summary?.ToMarkdownText())
+            .AppendLine()
+            .AppendLine(Format.Italic(description.Remarks?.ToMarkdownText()))
+            .AppendLine()
+            .AppendLine(description.Example?.ToMarkdownText())
+            .AppendLine()
+            .AppendMembersIfAny("Constructors", relativeTypeUrl, description.Constructors)
+            .AppendMembersIfAny("Methods", relativeTypeUrl, description.Methods)
+            .AppendMembersIfAny("Properties", relativeTypeUrl, description.Properties)
+            .AppendMembersIfAny("Events", relativeTypeUrl, description.Events)
+            .Append("Namespace ")
+            .AppendLine(Format.Url($"../{description.Namespace.Url}.md", description.Namespace.DisplayName));
         
         return builder.ToString();
     }
 
-    private static void AppendMembersIfAny(
-        StringBuilder builder, 
+    private static StringBuilder AppendMembersIfAny(
+        this StringBuilder builder, 
         string name,
         string relativeParentUrl,
         List<MemberDescription> members)
     {
-        if (!members.Any()) return;
-        
-        builder.AppendLine(Format.H3(name));
-        
-        builder.Append(Table.CreateHeaders("Name", "Description"));
-        
-        foreach (var member in members)
-        {
-            string returnType = member.ReturnType is not null ? $"{Format.Italic(member.ReturnType.GetAliasOrName()!)}  " : ""; 
-            string relativePath = Path.Combine(relativeParentUrl, member.Self.Url.TrimRoot(member.Parent.Url));
-            builder.Append(Table.AddRow($"{returnType}{Format.Url($"{relativePath}.md",member.Self.DisplayName)}", member.Summary?.WithoutNewLines() ?? ""));
-        }
+        if (!members.Any()) return builder;
 
-        builder.AppendLine();
+        builder
+            .AppendLine(Format.H3(name))
+            .Append(Table.CreateHeaders("Name", "Description"))
+            .ForEach(members, member =>
+            {
+                string returnType = member.ReturnType is not null ? $"{Format.Italic(member.ReturnType.GetAliasOrName()!)}  " : "";
+                string relativePath = Path.Combine(relativeParentUrl, member.Self.Url.TrimRoot(member.Parent.Url));
+                builder.Append(Table.AddRow($"{returnType}{Format.Url($"{relativePath}.md", member.Self.DisplayName)}", member.Summary?.WithoutNewLines() ?? ""));
+            })
+            .AppendLine();
+        
+        return builder;
     }
 }

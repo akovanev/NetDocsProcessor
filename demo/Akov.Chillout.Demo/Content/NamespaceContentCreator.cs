@@ -11,16 +11,16 @@ public class NamespaceContentCreator
     {
         var builder = new StringBuilder();
 
-        builder.AppendLine(Format.H1(description.Self.DisplayName));
-
-        builder.Append(Table.CreateHeaders("Type", "Description"));
-
-        foreach (var type in description.Types.OrderBy(t => t.Self.DisplayName))
-        {
-            builder.Append(Table.AddRow(Format.Url($"{type.Self.Url}.md",type.Self.DisplayName), type.Summary?.WithoutNewLines() ?? ""));
-        }
-
-        builder.AppendLine(Format.Url("index.md", "index.md"));
+        builder
+            .AppendLine(Format.H1(description.Self.DisplayName))
+            .Append(Table.CreateHeaders("Type", "Description"))
+            .ForEach(description.Types.OrderBy(t => t.Self.DisplayName), type =>
+            {
+                builder.Append(Table.AddRow(Format.Url($"{type.Self.Url}.md", type.Self.DisplayName), type.Summary?.WithoutNewLines() ?? ""));
+            })
+            .AppendLine()
+            .Append("Index ")
+            .AppendLine(Format.Url("index.md", "index.md"));
         
         return builder.ToString();
     }
