@@ -1,3 +1,8 @@
+using System.Text;
+using Akov.NetDocsProcessor.Common;
+using Akov.NetDocsProcessor.Extensions;
+using Akov.NetDocsProcessor.Input;
+
 namespace Akov.NetDocsProcessor.Output;
 
 /// <summary>
@@ -122,5 +127,75 @@ public class MemberDescription : IXmlMemberElement
     /// </summary>
     public List<PageInfo>? SeeAlso { get; set; }
 
-    
+    public override string ToString()
+    {
+        var builder = new StringBuilder();
+
+        if (PayloadInfo.AccessLevel == AccessLevel.ProtectedInternal)
+        {
+            builder.Append("protected internal ");
+        }
+        else
+        {
+            builder.Append($"{PayloadInfo.AccessLevel.ToString().ToLower()} ");
+        }
+
+        if (PayloadInfo.IsAbstract && Parent.ElementType is not ElementType.Interface)
+        {
+            builder.Append("abstract ");
+        }
+
+        if (PayloadInfo.IsOverride)
+        {
+            builder.Append("override ");
+        }
+
+        if (PayloadInfo.IsSealed)
+        {
+            builder.Append("sealed ");
+        }
+
+        if (PayloadInfo.IsStatic)
+        {
+            builder.Append("static ");
+        }
+
+        if (PayloadInfo.IsVirtual)
+        {
+            builder.Append("virtual ");
+        }
+        
+        if (PayloadInfo.IsAsync == true)
+        {
+            builder.Append("async ");
+        }
+        
+        if (ReturnType is not null)
+        {
+            builder.Append($"{ReturnType.GetTypeAliasOrName()} ");
+        }
+
+        builder.Append($"{Self.DisplayName} ");
+
+        bool isPropertyAndHasGetter = PayloadInfo.HasGetMethod == true;
+        bool isPropertyAndHasSetter = PayloadInfo.HasSetMethod == true;
+
+        if (!isPropertyAndHasGetter && !isPropertyAndHasSetter) return builder.ToString();
+        
+        builder.Append(" { ");
+            
+        if (isPropertyAndHasGetter)
+        {
+            builder.Append("get; ");
+        }
+            
+        if (isPropertyAndHasSetter)
+        {
+            builder.Append("set; ");
+        }
+            
+        builder.Append("} ");
+
+        return builder.ToString();
+    }
 }

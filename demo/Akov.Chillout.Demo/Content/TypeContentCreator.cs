@@ -44,9 +44,8 @@ public static class TypeContentCreator
             .Append(Table.CreateHeaders("Name", "Description"))
             .ForEach(members, member =>
             {
-                string returnType = member.ReturnType is not null ? $"{Format.Italic(member.ReturnType.GetAliasOrName()!)}  " : "";
                 string relativePath = Path.Combine(relativeParentUrl, member.Self.Url.TrimRoot(member.Parent.Url));
-                builder.Append(Table.AddRow($"{returnType}{Format.Url($"{relativePath}.md", member.Title ?? member.Self.DisplayName)}", member.Summary?.WithoutNewLines() ?? ""));
+                builder.Append(Table.AddRow($"{Format.Url($"{relativePath}.md", member.Title ?? member.Self.DisplayName)}", member.Summary?.WithoutNewLines() ?? ""));
             })
             .AppendLine();
         

@@ -14,7 +14,7 @@ public static class MemberContentCreator
 
         builder
             .AppendLine(Format.H1(description.Title ?? description.Self.DisplayName))
-            .AppendLine(Format.CodeBlock(description.PayloadInfo.GetFullNameWithSignature(description.Self.DisplayName, description.Parent.ElementType, description.ReturnType)))
+            .AppendLine(Format.CodeBlock(description.ToString()))
             .AppendLine(description.Summary?.ToMarkdownText())
             .AppendLine()
             .AppendLine(Format.Italic(description.Remarks?.ToMarkdownText()))
