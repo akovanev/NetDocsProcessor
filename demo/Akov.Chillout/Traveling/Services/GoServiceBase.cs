@@ -9,11 +9,7 @@ namespace Akov.Chillout.Traveling.Services;
 public abstract class GoServiceBase<TTraveler> : IGoService<TTraveler> 
     where TTraveler : Traveler
 {
-    /// <summary>
-    /// Add country to the visited list.
-    /// </summary>
-    /// <param name="traveler">The traveler.</param>
-    /// <param name="country">The country.</param>
+    /// <inheritdoc />
     public abstract void AddCountryToVisitedList(TTraveler traveler, Country country);
 
     /// <summary>
@@ -26,6 +22,9 @@ public abstract class GoServiceBase<TTraveler> : IGoService<TTraveler>
     /// <returns>Null or traveler.</returns>
     public TTraveler? PrintTraveler<TOutput>(TTraveler traveler, TOutput output, int retry)
         => null;
+    
+    /// <inheritdoc />
+    public void Test(int number) {}
     
     /// <summary>
     /// The traveling provider.

@@ -63,6 +63,11 @@ public class MemberDescription : IXmlMemberElement
 #endif
     
     /// <summary>
+    /// The method, event or property return type.
+    /// </summary>
+    public string? ReturnType { get; set; }
+    
+    /// <summary>
     /// The title for the member.
     /// </summary>
     public string? Title { get; set; }

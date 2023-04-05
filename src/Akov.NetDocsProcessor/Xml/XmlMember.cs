@@ -35,7 +35,4 @@ public class XmlMember
 
     [XmlElement("seealso")]
     public List<XmlSeeAlso>? SeeAlso { get; set; }
-
-    [XmlElement("inheritdoc")]
-    public bool InheritsDocumentation { get; set; }
 }

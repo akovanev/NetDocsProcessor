@@ -53,8 +53,9 @@ public class TypeContentCreator
         
         foreach (var member in members)
         {
+            string returnType = member.ReturnType is not null ? $"{Format.Italic(member.ReturnType.ToLower())}  " : ""; 
             string relativePath = Path.Combine(relativeParentUrl, member.Self.Url.TrimRoot(member.Parent.Url));
-            builder.Append(Table.AddRow(Format.Url($"{relativePath}.md",member.Self.DisplayName), member.Summary ?? ""));
+            builder.Append(Table.AddRow($"{returnType}{Format.Url($"{relativePath}.md",member.Self.DisplayName)}", member.Summary ?? ""));
         }
 
         builder.AppendLine();

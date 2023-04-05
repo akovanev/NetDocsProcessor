@@ -12,6 +12,9 @@ public class MemberContentCreator
         var builder = new StringBuilder();
 
         builder.AppendLine(Format.H1(description.Self.DisplayName));
+        
+        string returnType = description.ReturnType is not null ? $"{description.ReturnType.ToLower()} " : "";
+        builder.AppendLine(Format.CodeBlock($"{returnType}{description.Self.DisplayName}"));
 
         builder.AppendLine(description.Summary?.ToMarkdownText());
         builder.AppendLine();

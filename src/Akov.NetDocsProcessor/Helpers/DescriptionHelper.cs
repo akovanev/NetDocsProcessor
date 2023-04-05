@@ -49,7 +49,7 @@ internal partial class DescriptionHelper
 
             // Remove namespaces and concat the substrings
             return string.Concat(
-                Regex.Split(symbolAsString, @"(\(|\s|\)|>)")
+                Regex.Split(symbolAsString, @"(\(|\s|\)|>|<)")
                     .Where(s => s != String.Empty)
                     .Select(str => str.TrimBeforeLast()));
         }
@@ -64,6 +64,7 @@ internal partial class DescriptionHelper
             CommentId = symbol?.GetDocumentationCommentId() ?? Texts.XmlCommentNotFound,
             MemberType = memberType.ToString(),
             Name = memberName,
+            ReturnType = symbol!.GetReturnType(),
             Parent = parent
         };
     }

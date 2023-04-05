@@ -15,7 +15,7 @@ public class Format
     public static string CrossedOut(string text) => $"~~{text}~~";
 
     public static string Code(string text) => $"`{text}`";
-    public static string CodeBlock(string code, string language)
+    public static string CodeBlock(string code, string language = "csharp")
         => $"```{language}{Environment.NewLine}{code}{Environment.NewLine}```";
     
     public static string Url(string url, string linkText)

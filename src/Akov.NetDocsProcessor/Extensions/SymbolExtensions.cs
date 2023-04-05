@@ -38,4 +38,22 @@ internal static class SymbolExtensions
     
     public static IEventSymbol? FindBy(this ImmutableArray<IEventSymbol>? events, EventInfo @event)
         => events?.SingleOrDefault(e => e.Name == @event.Name);
+
+    public static string? GetReturnType(this ISymbol symbol)
+    {
+        switch (symbol.Kind)
+        {
+            case SymbolKind.Method:
+                var method = (IMethodSymbol)symbol;
+                if (method.MethodKind != MethodKind.Constructor)
+                    return ((IMethodSymbol)symbol).ReturnType.Name;
+                break;
+            case SymbolKind.Property:
+                return ((IPropertySymbol)symbol).Type.Name;
+            case SymbolKind.Event:
+                return ((IEventSymbol)symbol).Type.Name;
+        }
+        
+        return null;
+    }
 }
