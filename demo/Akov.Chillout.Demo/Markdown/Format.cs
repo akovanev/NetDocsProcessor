@@ -17,7 +17,9 @@ public class Format
     public static string Code(string text) => $"`{text}`";
     public static string CodeBlock(string code, string language = "csharp")
         => $"```{language}{Environment.NewLine}{code}{Environment.NewLine}```";
-    
-    public static string Url(string url, string linkText)
-        => $"[{linkText}]({url})";
+
+    public static string Url(string url, string linkText, bool forceUseBackSlash = true)
+        => forceUseBackSlash 
+            ? $"[{linkText}](./{url.Replace('\\', '/')})" 
+            : $"[{linkText}]({url})";
 } 
