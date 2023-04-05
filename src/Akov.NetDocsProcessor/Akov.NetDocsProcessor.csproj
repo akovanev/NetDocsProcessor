@@ -19,6 +19,7 @@
         <LangVersion>latestmajor</LangVersion>
         <PackageIcon>logo.png</PackageIcon>
         <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackRelease>true</PackRelease>
     </PropertyGroup>
 
     <ItemGroup>
