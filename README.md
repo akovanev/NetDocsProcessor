@@ -17,7 +17,6 @@ The [demo](https://github.com/akovanev/NetDocsProcessor/blob/main/demo/Akov.Chil
 
 ### The list of supported xml tags
 
-* `<code>` - should be inside `<example>`.
 * `<example>`
 * `<exception>`
 * `<include>`
@@ -26,3 +25,6 @@ The [demo](https://github.com/akovanev/NetDocsProcessor/blob/main/demo/Akov.Chil
 * `<param>`
 * `<summary>`
 * `<typeparam>`
+
+
+The tags `<example>`, `<remarks>` and `<returns>` support internal tags. 
