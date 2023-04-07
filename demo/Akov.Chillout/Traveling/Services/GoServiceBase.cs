@@ -4,6 +4,9 @@ namespace Akov.Chillout.Traveling.Services;
 
 /// <summary>
 /// Base implementation for GoService.
+/// <para>
+/// Text
+/// </para>
 /// </summary>
 /// <typeparam name="TTraveler">The traveler.</typeparam>
 public abstract class GoServiceBase<TTraveler> : IGoService<TTraveler> 

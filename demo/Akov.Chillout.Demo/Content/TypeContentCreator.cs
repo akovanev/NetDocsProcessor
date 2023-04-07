@@ -1,5 +1,4 @@
 using System.Text;
-using Akov.Chillout.Demo.Helpers;
 using Akov.Chillout.Demo.Markdown;
 using Akov.NetDocsProcessor.Extensions;
 using Akov.NetDocsProcessor.Output;
@@ -15,11 +14,11 @@ public static class TypeContentCreator
 
         builder
             .AppendLine(Format.H1(description.Self.DisplayName))
-            .AppendLine(description.Summary?.ToMarkdownText())
+            .AppendLine(description.Summary?.ToMarkdownTextWithReplacements())
             .AppendLine()
-            .AppendLine(Format.Italic(description.Remarks?.ToMarkdownText()))
+            .AppendLine(Format.Italic(description.Remarks?.ToMarkdownTextWithReplacements()))
             .AppendLine()
-            .AppendLine(description.Example?.ToMarkdownText())
+            .AppendLine(description.Example?.ToMarkdownTextWithReplacements())
             .AppendLine()
             .AppendMembersIfAny("Constructors", relativeTypeUrl, description.Constructors)
             .AppendMembersIfAny("Methods", relativeTypeUrl, description.Methods)

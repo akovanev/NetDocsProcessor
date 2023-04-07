@@ -9,11 +9,11 @@ public class XmlMember
     [XmlAttribute("name")]
     public string? Name { get; set; }
 
-    [XmlElement("summary")]
-    public string? Summary { get; set; }
+    [XmlAnyElement("summary")]
+    public XmlElement? Summary { get; set; }
 
-    [XmlElement("remarks")]
-    public string? Remarks { get; set; }
+    [XmlAnyElement("remarks")]
+    public XmlElement? Remarks { get; set; }
 
     [XmlAnyElement("example")]
     public XmlElement? Example { get; set; }
@@ -27,8 +27,8 @@ public class XmlMember
     [XmlElement("typeparam")]
     public List<XmlTypeParameter>? TypeParameters { get; set; }
 
-    [XmlElement("returns")]
-    public string? Returns { get; set; }
+    [XmlAnyElement("returns")]
+    public XmlElement? Returns { get; set; }
 
     [XmlElement("value")]
     public string? Value { get; set; }

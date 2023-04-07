@@ -7,9 +7,9 @@ internal static class XmlMemberElementExtensions
 {
     public static void FillBy(this IXmlMemberBaseElement element, XmlMember xmlMember)
     {
-        element.Summary = xmlMember.Summary;
+        element.Summary = xmlMember.Summary?.InnerXml;
         element.Example = xmlMember.Example?.InnerXml;
-        element.Remarks = xmlMember.Remarks;
+        element.Remarks = xmlMember.Remarks?.InnerXml;
         element.TypeParameters = xmlMember.TypeParameters
             ?.Select(t => new TypeParameterInfo { Name = t.Name, Text = t.Text })
             .ToList();
@@ -24,7 +24,7 @@ internal static class XmlMemberElementExtensions
                 ?.Select(t => new ParameterInfo { Name = t.Name, Text = t.Text })
                 .ToList();
 
-            member.Returns = xmlMember.Returns;
+            member.Returns = xmlMember.Returns?.InnerXml;
         }
     }
 }

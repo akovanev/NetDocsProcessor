@@ -1,5 +1,4 @@
 using System.Text;
-using Akov.Chillout.Demo.Helpers;
 using Akov.Chillout.Demo.Markdown;
 using Akov.NetDocsProcessor.Output;
 

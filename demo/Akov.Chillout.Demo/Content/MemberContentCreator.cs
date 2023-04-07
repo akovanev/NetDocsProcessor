@@ -1,5 +1,4 @@
 using System.Text;
-using Akov.Chillout.Demo.Helpers;
 using Akov.Chillout.Demo.Markdown;
 using Akov.NetDocsProcessor.Extensions;
 using Akov.NetDocsProcessor.Output;
@@ -15,11 +14,11 @@ public static class MemberContentCreator
         builder
             .AppendLine(Format.H1(description.Title ?? description.Self.DisplayName))
             .AppendLine(Format.CodeBlock(description.ToString()))
-            .AppendLine(description.Summary?.ToMarkdownText())
+            .AppendLine(description.Summary?.ToMarkdownTextWithReplacements())
             .AppendLine()
-            .AppendLine(Format.Italic(description.Remarks?.ToMarkdownText()))
+            .AppendLine(Format.Italic(description.Remarks?.ToMarkdownTextWithReplacements()))
             .AppendLine()
-            .AppendLine(description.Example?.ToMarkdownText())
+            .AppendLine(description.Example?.ToMarkdownTextWithReplacements())
             .AppendLine()
             .Append("Type ")
             .AppendLine(Format.Url($"../../{description.Parent.Url.TrimBeforeLast('\\')}.md", description.Parent.DisplayName));

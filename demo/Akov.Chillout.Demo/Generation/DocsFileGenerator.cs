@@ -3,7 +3,7 @@ using Akov.NetDocsProcessor.Api;
 using Akov.NetDocsProcessor.Input;
 using Akov.NetDocsProcessor.Output;
 
-namespace Akov.Chillout.Demo.Helpers;
+namespace Akov.Chillout.Demo.Generation;
 
 public class DocsFileGenerator
 {
