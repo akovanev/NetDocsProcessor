@@ -1,6 +1,6 @@
 # NetDocsProcessor
 
-[![](https://img.shields.io/badge/.NET%20-6.0%20%7C%207.0-blueviolet)](https://dotnet.microsoft.com/en-us/download/dotnet/7.0) [![](https://img.shields.io/nuget/v/Akov.NetDocsProcessor)](https://www.nuget.org/packages/Akov.NetDocsProcessor/) [![](https://img.shields.io/nuget/dt/akov.NetDocsProcessor)](https://www.nuget.org/packages/Akov.NetDocsProcessor/)
+[![](https://img.shields.io/badge/.NET%20-6.0%20%7C%207.0-blueviolet)](https://dotnet.microsoft.com/en-us/download/dotnet/7.0) [![](https://img.shields.io/nuget/v/Akov.NetDocsProcessor)](https://www.nuget.org/packages/Akov.NetDocsProcessor/)
 
 #### *The first demo version is released.*
 
