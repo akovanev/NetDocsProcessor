@@ -13,6 +13,7 @@ public class TypeDescription : IXmlMemberBaseElement
         Methods = new List<MemberDescription>();
         Properties = new List<MemberDescription>();
         Events = new List<MemberDescription>();
+        EnumMembers = new List<EnumMemberDescription>();
     }
 
 #if NET7_0_OR_GREATER
@@ -130,6 +131,11 @@ public class TypeDescription : IXmlMemberBaseElement
     /// The list of events.
     /// </summary>
     public List<MemberDescription> Events { get; }
+    
+    /// <summary>
+    /// The list of enums members if type is enumeration.
+    /// </summary>
+    public List<EnumMemberDescription> EnumMembers { get; }
     
     /// <summary>
     /// The list of the related references.

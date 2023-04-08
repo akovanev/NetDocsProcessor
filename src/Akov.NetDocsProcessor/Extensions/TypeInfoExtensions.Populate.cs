@@ -61,6 +61,18 @@ internal static partial class TypeInfoExtensions
                         symbols.FindBy(@event),
                         parent.Self))
                 .ToList();
+
+    public static List<EnumMemberDescription> PopulateEnumMembers(this TypeInfo typeInfo, TypeDescription parent, ImmutableArray<ISymbol>? symbols)
+    {
+        var result = new List<EnumMemberDescription>();
+        if (!typeInfo.IsEnum || symbols is null) return result;
+
+        result.AddRange(
+            from ISymbol? symbol in symbols 
+            select DescriptionHelper.CreateEnumMember(symbol, parent.Self));
+
+        return result;
+    }
     
     private static ConstructorInfo[] GetTypeConstructors(this TypeInfo typeInfo)
         => typeInfo

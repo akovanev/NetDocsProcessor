@@ -1,5 +1,4 @@
 using System.Reflection;
-using System.Text.RegularExpressions;
 using Akov.NetDocsProcessor.Common;
 using Akov.NetDocsProcessor.Extensions;
 using Akov.NetDocsProcessor.Output;
@@ -64,4 +63,12 @@ internal partial class DescriptionHelper
             PayloadInfo = symbol?.GetPayload() ?? new PayloadInfo()
         };
     }
+
+    public static EnumMemberDescription CreateEnumMember(ISymbol symbol, PageInfo parent)
+        => new()
+        {
+            Name = symbol.Name,
+            CommentId = symbol.GetDocumentationCommentId() ?? Texts.XmlCommentNotFound,
+            Parent = parent,
+        };
 }

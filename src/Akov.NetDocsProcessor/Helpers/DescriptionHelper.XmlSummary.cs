@@ -24,4 +24,15 @@ internal partial class DescriptionHelper
             memberDescription.FillBy(memberData);
         }
     }
+    
+    public static void UpdateEnumMembers(List<EnumMemberDescription> memberDescriptions, List<XmlMember> members)
+    {
+        foreach (var memberDescription in memberDescriptions)
+        {
+            var memberData = members.FirstOrDefault(m => m.Name == memberDescription.CommentId);
+            if (memberData is null) continue;
+            
+            memberDescription.FillBy(memberData);
+        }
+    }
 }

@@ -24,6 +24,7 @@ public static class TypeContentCreator
             .AppendMembersIfAny("Methods", relativeTypeUrl, description.Methods)
             .AppendMembersIfAny("Properties", relativeTypeUrl, description.Properties)
             .AppendMembersIfAny("Events", relativeTypeUrl, description.Events)
+            .AppendEnumMembersIfAny("Members", description.EnumMembers)
             .Append("Namespace ")
             .AppendLine(Format.Url($"../{description.Namespace.Url}.md", description.Namespace.DisplayName));
         
@@ -45,6 +46,28 @@ public static class TypeContentCreator
             {
                 string relativePath = Path.Combine(relativeParentUrl, member.Self.Url.TrimRoot(member.Parent.Url));
                 builder.Append(Table.AddRow($"{Format.Url($"{relativePath}.md", member.Title ?? member.Self.DisplayName)}", member.Summary?.WithoutNewLines() ?? ""));
+            })
+            .AppendLine();
+        
+        return builder;
+    }
+    
+    private static StringBuilder AppendEnumMembersIfAny(
+        this StringBuilder builder, 
+        string name,
+        List<EnumMemberDescription> members)
+    {
+        if (!members.Any()) return builder;
+
+        builder
+            .AppendLine(Format.H3(name))
+            .Append(Table.CreateHeaders("Name", "Description"))
+            .ForEach(members, member =>
+            {
+                if (member.Name != "value__")
+                {
+                    builder.Append(Table.AddRow(member.Name, member.Summary?.WithoutNewLines() ?? ""));
+                }
             })
             .AppendLine();
         

@@ -11,9 +11,20 @@ internal class TypeSymbolObject
     
     public static TypeSymbolObject Create(CSharpCompilation compilation, TypeInfo type)
     {
-        var symbolObject = new TypeSymbolObject();
-        symbolObject.Type = compilation.GetTypeByMetadataName(type.FullName ?? type.Name);
-        symbolObject.InitializeMembers();
+        var symbolObject = new TypeSymbolObject
+        {
+            Type = compilation.GetTypeByMetadataName(type.FullName ?? type.Name)
+        };
+
+        if (type.IsEnum)
+        {
+            symbolObject.InitializeEnumMembers();
+        }
+        else
+        {
+            symbolObject.InitializeMembers();
+        }
+        
         return symbolObject;
     }
 
@@ -22,6 +33,7 @@ internal class TypeSymbolObject
     public ImmutableArray<IMethodSymbol>? Methods { get; private set; }
     public ImmutableArray<IPropertySymbol>? Properties { get; private set; }
     public ImmutableArray<IEventSymbol>? Events { get; private set; }
+    public ImmutableArray<ISymbol>? EnumMembers { get; private set; }
 
     private void InitializeMembers()
     {
@@ -56,5 +68,11 @@ internal class TypeSymbolObject
         Methods = methods.ToImmutableArray();
         Properties = properties.ToImmutableArray();
         Events = events.ToImmutableArray();
+    }
+
+    private void InitializeEnumMembers()
+    {
+        if (Type is null) return;
+        EnumMembers = Type.GetMembers();
     }
 }

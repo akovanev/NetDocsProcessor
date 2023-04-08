@@ -33,9 +33,22 @@ internal class DocsProcessor : IDocsProcessor
                 var symbolObject = TypeSymbolObject.Create(compilation, filteredType);
                 var typeDescription = DescriptionHelper.CreateType(filteredType, symbolObject.Type, namespaceDescription.Self);
 
-                // No nested objects for members for delegates or enums needed
-                if(typeDescription.ElementType is ElementType.Delegate or ElementType.Enum) continue;
+                // No nested objects for members for delegates needed
+                if (typeDescription.ElementType is ElementType.Delegate)
+                {
+                    namespaceDescription.Types.Add(typeDescription);
+                    continue;
+                }
                 
+                // No nested objects for enums but the values needed
+                if (typeDescription.ElementType is ElementType.Enum)
+                {
+                    var enumMembers = filteredType.PopulateEnumMembers(typeDescription, symbolObject.EnumMembers);
+                    typeDescription.EnumMembers.AddRange(enumMembers);
+                    namespaceDescription.Types.Add(typeDescription);
+                    continue;
+                }
+
                 var constructors = filteredType.PopulateConstructors(typeDescription, symbolObject.Constructors, settings.AccessLevel);
                 typeDescription.Constructors.AddRange(constructors);
                 
@@ -67,8 +80,15 @@ internal class DocsProcessor : IDocsProcessor
             {
                 DescriptionHelper.UpdateTypeSummary(typeDescription, xmlDoc.Members);
 
-                // No nested objects for members for delegates or enums needed
-                if(typeDescription.ElementType is ElementType.Delegate or ElementType.Enum) continue;
+                // No nested objects for for delegates or enums needed
+                if(typeDescription.ElementType is ElementType.Delegate) continue;
+                
+                // No nested objects for for enums but enum members needed
+                if (typeDescription.ElementType is ElementType.Enum)
+                {
+                    DescriptionHelper.UpdateEnumMembers(typeDescription.EnumMembers, xmlDoc.Members);
+                    continue;
+                }
 
                 if (typeDescription.ElementType is not ElementType.Record)
                 {
