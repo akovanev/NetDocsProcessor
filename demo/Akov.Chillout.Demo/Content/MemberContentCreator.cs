@@ -19,8 +19,31 @@ public static class MemberContentCreator
             .AppendLine(Format.Italic(description.Remarks?.ToMarkdownTextWithReplacements()))
             .AppendLine()
             .AppendLine(description.Example?.ToMarkdownTextWithReplacements())
-            .AppendLine()
-            .Append("Type ")
+            .AppendLine();
+            
+        if (description.Parameters?.Any() == true)
+        {
+            builder.AppendLine(Format.H3("Parameters"))
+                .Append(Table.CreateHeaders("Name", "Description"));
+            foreach (var parameter in description.Parameters.Where(p => p.Name is not null))
+            {
+                builder.Append(Table.AddRow(parameter.Name!, parameter.Text ?? string.Empty));
+            }
+            builder.AppendLine();
+        }
+
+        if (description.Exceptions?.Any() == true)
+        {
+            builder.AppendLine(Format.H3("Exceptions"))
+                .Append(Table.CreateHeaders("Name", "Description"));
+            foreach (var exception in description.Exceptions.Where(e => e.Reference is not null))
+            {
+                builder.Append(Table.AddRow(exception.Reference!, exception.Text ?? string.Empty));
+            }
+            builder.AppendLine();
+        }
+         
+        builder.Append("Type ")
             .AppendLine(Format.Url($"../../{description.Parent.Url.TrimBeforeLast('\\')}.md", description.Parent.DisplayName));
 
         return builder.ToString();
