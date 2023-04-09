@@ -19,7 +19,10 @@ internal static class SymbolExtensions
         {
             if(methodSymbol.Name != method.Name) continue;
 
-            var methodSymbolParams = methodSymbol.Parameters.Select(p => p.Type.MetadataName).ToArray();
+            var methodSymbolParams = methodSymbol.Parameters
+                .Select(p => string.IsNullOrEmpty(p.Type.MetadataName)
+                    ? p.Type.OriginalDefinition.ToString()?.WithoutNamespaces()
+                    : p.Type.MetadataName).ToArray();
 
             if (!methodSymbolParams.SequenceEqual(methodParams.Select(m => m.Name))) continue;
 
