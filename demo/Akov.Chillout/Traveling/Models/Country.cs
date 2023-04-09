@@ -24,7 +24,23 @@ public class Country
     /// <summary>
     /// The country type.
     /// </summary>
-    public CountryType CountryType { get; private set; }
+    public CountryType? CountryType { get; private set; }
+    
+    /// <summary>
+    /// The country types.
+    /// </summary>
+    public List<CountryType>? CountryTypes { get; set; }
+
+    /// <summary>
+    /// Returns country types.
+    /// </summary>
+    public List<CountryType>? GetCountryTypes() => CountryTypes;
+
+    
+    /// <summary>
+    /// Returns country types as array.
+    /// </summary>
+    public CountryType[] GetCountryTypesAsArray() => CountryTypes?.ToArray() ?? Enumerable.Empty<CountryType>().ToArray();
 
     /// <summary>
     /// Change the dangerous level for the country type.

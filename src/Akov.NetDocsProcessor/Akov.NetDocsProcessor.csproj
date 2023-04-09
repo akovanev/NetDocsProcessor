@@ -14,7 +14,7 @@
         <Company />
         <PackageTags>Documentation;Xml</PackageTags>
         <NeutralLanguage>en</NeutralLanguage>
-        <Version>1.0.2</Version>
+        <Version>1.0.3</Version>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <LangVersion>latestmajor</LangVersion>
         <PackageIcon>logo.png</PackageIcon>

@@ -17,6 +17,8 @@ internal static class SymbolExtensions
         
         foreach (var methodSymbol in methods)
         {
+            if(methodSymbol.Name != method.Name) continue;
+
             var methodSymbolParams = methodSymbol.Parameters.Select(p => p.Type.MetadataName).ToArray();
 
             if (!methodSymbolParams.SequenceEqual(methodParams.Select(m => m.Name))) continue;
@@ -142,6 +144,19 @@ internal static class SymbolExtensions
 
         return payload;
     }
+
+    public static bool IsSpecialMethod(this IMethodSymbol method)
+        => method.MethodKind is MethodKind.Constructor
+            or MethodKind.StaticConstructor
+            or MethodKind.Destructor
+            or MethodKind.PropertyGet
+            or MethodKind.PropertySet
+            or MethodKind.EventAdd
+            or MethodKind.EventRaise
+            or MethodKind.EventRemove
+            or MethodKind.Conversion
+            or MethodKind.ExplicitInterfaceImplementation
+            or MethodKind.UserDefinedOperator;
 
     private static AccessLevel ToAccessLevel(this Accessibility accessibility)
         => accessibility switch

@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using Akov.NetDocsProcessor.Extensions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using TypeInfo = System.Reflection.TypeInfo;
@@ -56,7 +57,7 @@ internal class TypeSymbolObject
                     break;
                 case SymbolKind.Method:
                     var method = (IMethodSymbol)member;
-                    if (method.MethodKind != MethodKind.Constructor)
+                    if (!method.IsSpecialMethod())
                         methods.Add(method);
                     break;
                 case SymbolKind.Event:
