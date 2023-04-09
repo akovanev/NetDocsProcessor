@@ -51,10 +51,10 @@ internal static class SymbolExtensions
             case SymbolKind.Method:
                 var method = (IMethodSymbol)symbol;
                 if (method.MethodKind != MethodKind.Constructor)
-                    return method.ReturnType.ToString()?.WithoutNamespaces();
+                    return method.ReturnType.ToString()?.WithoutNamespaces().GetNullableTypeName();
                 break;
             case SymbolKind.Property:
-                return ((IPropertySymbol)symbol).Type.ToString()?.WithoutNamespaces();
+                return ((IPropertySymbol)symbol).Type.ToString()?.WithoutNamespaces().GetNullableTypeName();
             case SymbolKind.Event:
                 return ((IEventSymbol)symbol).Type.Name;
         }
@@ -81,6 +81,15 @@ internal static class SymbolExtensions
     
     public static string? GetDisplayName(this ISymbol? symbol)
     {
+        string? FormatParameter(string? parameterSignature)
+        {
+            if (parameterSignature is null) return null;
+            string[] split = parameterSignature.WithoutNamespaces().Split(' ');
+            return split.Length != 2 
+                ? parameterSignature : 
+                $"{split[0].GetNullableTypeName()} {split[1]}";
+        }
+        
         string AddParametersIfMethod(string symbolAsString)
         {
             if (symbol!.Kind != SymbolKind.Method) return symbolAsString;
@@ -93,7 +102,7 @@ internal static class SymbolExtensions
             {
                 symbolAsString = symbolAsString.Replace(
                     parametersMatch.Groups[1].Value,
-                    string.Join(", ", method.Parameters.Select(m => m.ToString())));
+                    string.Join(", ", method.Parameters.Select(s => FormatParameter(s.ToString()))));
             }
 
             return symbolAsString;

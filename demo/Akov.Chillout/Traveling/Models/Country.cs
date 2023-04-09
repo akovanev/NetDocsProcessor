@@ -19,7 +19,7 @@ public class Country
     /// <summary>
     /// The country name.
     /// </summary>
-    public string Name { get; }
+    public string? Name { get; }
     
     /// <summary>
     /// The country type.
@@ -34,13 +34,13 @@ public class Country
     /// <summary>
     /// Returns country types.
     /// </summary>
-    public List<CountryType>? GetCountryTypes() => CountryTypes;
+    public List<CountryType>? GetCountryTypes(List<CountryType>? types, CountryType? type) => CountryTypes?.Except(types!).ToList();
 
     
     /// <summary>
     /// Returns country types as array.
     /// </summary>
-    public CountryType[] GetCountryTypesAsArray() => CountryTypes?.ToArray() ?? Enumerable.Empty<CountryType>().ToArray();
+    public CountryType[]? GetCountryTypesAsArray() => CountryTypes?.ToArray();
 
     /// <summary>
     /// Change the dangerous level for the country type.

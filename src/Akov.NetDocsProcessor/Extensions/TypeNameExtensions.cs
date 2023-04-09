@@ -1,5 +1,6 @@
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Akov.NetDocsProcessor.Extensions;
 
@@ -87,6 +88,19 @@ internal static partial class TypeNameExtensions
             default:
                 return typeName;
         }
+    }
+    
+    public static string GetNullableTypeName(this string nullableTypeName)
+    {
+        if (string.IsNullOrEmpty(nullableTypeName))
+            return nullableTypeName;
+
+        var nullableRegex = new Regex(@"^Nullable<(.+)>");
+        Match match = nullableRegex.Match(nullableTypeName);
+        if (!match.Success) return nullableTypeName;
+        
+        string innerTypeName = match.Groups[1].Value;
+        return innerTypeName.EndsWith("?") ? innerTypeName : $"{innerTypeName}?";
     }
     
     private static string NormalizeTypeName(string? typeName)
