@@ -51,10 +51,10 @@ internal static class SymbolExtensions
             case SymbolKind.Method:
                 var method = (IMethodSymbol)symbol;
                 if (method.MethodKind != MethodKind.Constructor)
-                    return method.ReturnType.Name;
+                    return method.ReturnType.ToString()?.WithoutNamespaces();
                 break;
             case SymbolKind.Property:
-                return ((IPropertySymbol)symbol).Type.Name;
+                return ((IPropertySymbol)symbol).Type.ToString()?.WithoutNamespaces();
             case SymbolKind.Event:
                 return ((IEventSymbol)symbol).Type.Name;
         }
@@ -105,10 +105,7 @@ internal static class SymbolExtensions
         symbolAsString = AddParametersIfMethod(symbolAsString);
 
         // Remove namespaces and concat the substrings
-        return string.Concat(
-            Regex.Split(symbolAsString, @"(\(|\s|\)|>|<)")
-                .Where(s => s != String.Empty)
-                .Select(str => str.TrimBeforeLast()));
+        return symbolAsString.WithoutNamespaces();
     }
 
     public static PayloadInfo GetPayload(this ISymbol symbol)
@@ -168,4 +165,10 @@ internal static class SymbolExtensions
             Accessibility.Private => AccessLevel.Private,
             _ => AccessLevel.Private
         };
+
+    private static string WithoutNamespaces(this string symbolAsString)
+        => string.Concat(
+            Regex.Split(symbolAsString, @"(\(|\s|\)|>|<)")
+                .Where(s => s != string.Empty)
+                .Select(str => str.TrimBeforeLast()));
 }
