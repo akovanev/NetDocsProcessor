@@ -17,18 +17,20 @@ internal static partial class AccessLevelExtensions
                 $"Method {nameof(IsVisibleFor)} is not defined for {nameof(AccessLevel)} {accessLevel}")
         };
     
-    
     // Works for constructors and methods.
     public static bool IsVisibleFor(this MethodBase method, AccessLevel accessLevel)
-        => IsVisibleFor(method, null, accessLevel);
+        => IsVisibleForInternal(method, null, accessLevel);
 
+    public static bool IsVisibleFor(this FieldInfo field, AccessLevel accessLevel)
+        => IsVisibleForInternal(field, accessLevel);
+    
     public static bool IsVisibleFor(this PropertyInfo property, AccessLevel accessLevel)
-        => IsVisibleFor(property.GetGetMethod(), property.GetSetMethod(), accessLevel);
+        => IsVisibleForInternal(property.GetGetMethod(), property.GetSetMethod(), accessLevel);
     
     public static bool IsVisibleFor(this EventInfo @event, AccessLevel accessLevel)
-        => IsVisibleFor(@event.AddMethod, @event.RemoveMethod, accessLevel);
+        => IsVisibleForInternal(@event.AddMethod, @event.RemoveMethod, accessLevel);
 
-    private static bool IsVisibleFor(MethodBase? method1, MethodBase? method2, AccessLevel accessLevel)
+    private static bool IsVisibleForInternal(MethodBase? method1, MethodBase? method2, AccessLevel accessLevel)
         => accessLevel switch
         {
             AccessLevel.Public => (method1 is not null && method1.IsPublic) ||
@@ -41,6 +43,18 @@ internal static partial class AccessLevelExtensions
                                               (method1.IsPublic || method1.IsFamilyOrAssembly)) ||
                                              (method2 is not null &&
                                               (method2.IsPublic || method2.IsFamilyOrAssembly)),
+            AccessLevel.Private => true,
+            _ => throw new InvalidOperationException(
+                $"Method {nameof(IsVisibleFor)} is not defined for {nameof(AccessLevel)} {accessLevel}")
+        };
+    
+    private static bool IsVisibleForInternal(FieldInfo? field, AccessLevel accessLevel)
+        => accessLevel switch
+        {
+            AccessLevel.Public => field is not null && field.IsPublic,
+            AccessLevel.Protected => field is not null && (field.IsPublic || field.IsFamily),
+            AccessLevel.Internal => field is not null && (field.IsPublic || field.IsAssembly),
+            AccessLevel.ProtectedInternal => field is not null && (field.IsPublic || field.IsFamilyOrAssembly),
             AccessLevel.Private => true,
             _ => throw new InvalidOperationException(
                 $"Method {nameof(IsVisibleFor)} is not defined for {nameof(AccessLevel)} {accessLevel}")

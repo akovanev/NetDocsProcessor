@@ -10,6 +10,7 @@ public class TypeDescription : IXmlMemberBaseElement
     public TypeDescription()
     {
         Constructors = new List<MemberDescription>();
+        Fields = new List<MemberDescription>();
         Methods = new List<MemberDescription>();
         Properties = new List<MemberDescription>();
         Events = new List<MemberDescription>();
@@ -112,6 +113,11 @@ public class TypeDescription : IXmlMemberBaseElement
     /// </summary>
     public List<TypeParameterInfo>? TypeParameters { get; set; }
 
+    /// <summary>
+    /// The list of constructors.
+    /// </summary>
+    public List<MemberDescription> Fields { get; }
+    
     /// <summary>
     /// The list of constructors.
     /// </summary>

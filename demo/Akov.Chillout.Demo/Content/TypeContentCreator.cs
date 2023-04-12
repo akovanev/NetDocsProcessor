@@ -21,6 +21,7 @@ public static class TypeContentCreator
             .AppendLine(description.Example?.ToMarkdownTextWithReplacements())
             .AppendLine()
             .AppendMembersIfAny("Constructors", relativeTypeUrl, description.Constructors)
+            .AppendMembersIfAny("Fields", relativeTypeUrl, description.Fields)
             .AppendMembersIfAny("Methods", relativeTypeUrl, description.Methods)
             .AppendMembersIfAny("Properties", relativeTypeUrl, description.Properties)
             .AppendMembersIfAny("Events", relativeTypeUrl, description.Events)

@@ -30,6 +30,7 @@ internal class TypeSymbolObject
     }
 
     public INamedTypeSymbol? Type { get; private set; }
+    public ImmutableArray<IFieldSymbol>? Fields { get; private set; }
     public ImmutableArray<IMethodSymbol>? Constructors { get; private set; }
     public ImmutableArray<IMethodSymbol>? Methods { get; private set; }
     public ImmutableArray<IPropertySymbol>? Properties { get; private set; }
@@ -42,6 +43,7 @@ internal class TypeSymbolObject
 
         Constructors = Type.Constructors;
 
+        var fields = new List<IFieldSymbol>();
         var methods = new List<IMethodSymbol>();
         var properties = new List<IPropertySymbol>();
         var events = new List<IEventSymbol>();
@@ -51,6 +53,7 @@ internal class TypeSymbolObject
             switch (member.Kind)
             {
                 case SymbolKind.Field:
+                    fields.Add((IFieldSymbol)member);
                     break;
                 case SymbolKind.Property:
                     properties.Add((IPropertySymbol)member);
@@ -66,6 +69,7 @@ internal class TypeSymbolObject
             }
         }
 
+        Fields = fields.ToImmutableArray();
         Methods = methods.ToImmutableArray();
         Properties = properties.ToImmutableArray();
         Events = events.ToImmutableArray();

@@ -157,9 +157,14 @@ public class MemberDescription : IXmlMemberElement
 
         if (PayloadInfo.IsStatic)
         {
-            builder.Append("static ");
+            builder.Append(PayloadInfo.IsConst ? "const " : "static ");
         }
 
+        if (PayloadInfo.IsReadOnlyField)
+        {
+            builder.Append("readonly ");
+        }
+        
         if (PayloadInfo.IsVirtual)
         {
             builder.Append("virtual ");

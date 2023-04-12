@@ -11,6 +11,9 @@ internal static partial class AccessLevelExtensions
     public static IEnumerable<ConstructorInfo> OnlyVisible(this ConstructorInfo[] constructors, AccessLevel accessLevel)
         => constructors.Where(ctor => ctor.IsVisibleFor(accessLevel));
     
+    public static IEnumerable<FieldInfo> OnlyVisible(this FieldInfo[] fields, AccessLevel accessLevel)
+        => fields.Where(field => field.IsVisibleFor(accessLevel));
+    
     public static IEnumerable<MethodInfo> OnlyVisible(this MethodInfo[] methods, AccessLevel accessLevel)
         => methods.Where(method => method.IsVisibleFor(accessLevel));
     

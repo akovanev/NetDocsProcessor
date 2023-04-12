@@ -9,6 +9,16 @@ public class VisitedList
     private readonly List<Country> _countries;
 
     /// <summary>
+    /// Visited const.
+    /// </summary>
+    public const string Visited = "Visited";
+    
+    /// <summary>
+    /// Visited static.
+    /// </summary>
+    public static string VisitedStatic = "VisitedStatic";
+    
+    /// <summary>
     /// Creates a new country.
     /// </summary>
     /// <param name="traveler"></param>

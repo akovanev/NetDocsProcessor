@@ -23,6 +23,19 @@ internal static partial class TypeInfoExtensions
                         parent.Self))
                 .ToList();
     
+    public static List<MemberDescription> PopulateFields(this TypeInfo typeInfo, TypeDescription parent, ImmutableArray<IFieldSymbol>? symbols, AccessLevel accessLevel)
+        =>
+            typeInfo
+                .GetTypeFields()
+                .OnlyVisible(accessLevel)
+                .Select(field => 
+                    DescriptionHelper.CreateMember(
+                        field.Name, 
+                        MemberTypes.Field,
+                        symbols.FindBy(field),
+                        parent.Self))
+                .ToList();
+    
     public static List<MemberDescription> PopulateMethods(this TypeInfo typeInfo, TypeDescription parent, ImmutableArray<IMethodSymbol>? symbols, AccessLevel accessLevel)
         =>
             typeInfo
@@ -80,6 +93,12 @@ internal static partial class TypeInfoExtensions
             .Where(m => m.DeclaringType == typeInfo)
             .ToArray();
 
+    private static FieldInfo[] GetTypeFields(this TypeInfo typeInfo)
+        => typeInfo
+            .GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance)
+            .Where(p => p.DeclaringType == typeInfo)
+            .ToArray();
+    
     private static MethodInfo[] GetTypeMethods(this TypeInfo typeInfo)
         => typeInfo
             .GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance)
