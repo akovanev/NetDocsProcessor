@@ -9,6 +9,9 @@ namespace Akov.NetDocsProcessor.Extensions;
 
 internal static class SymbolExtensions
 {
+    public static IFieldSymbol? FindBy(this ImmutableArray<IFieldSymbol>? fields, FieldInfo field)
+        => fields?.SingleOrDefault(p => p.Name == field.Name);
+    
     public static IMethodSymbol? FindBy(this ImmutableArray<IMethodSymbol>? methods, MethodBase method)
     {
         if (methods is null) return null;
@@ -136,6 +139,10 @@ internal static class SymbolExtensions
         {
             case INamedTypeSymbol type:
                 payload.IsGenericType = type.IsGenericType;
+                break;
+            case IFieldSymbol field:
+                payload.IsConst = field.IsConst;
+                payload.IsReadOnlyField = field.IsReadOnly;
                 break;
             case IMethodSymbol method:
                 payload.IsAsync = method.IsAsync;

@@ -32,6 +32,7 @@ public class DocsFileGenerator
                 File.WriteAllText(Path.Combine(docsFolder, $"{type.Self.Url}.md"), typeMd);
 
                 CreateMemberContentIfAny(type.Constructors, docsFolder);
+                CreateMemberContentIfAny(type.Fields, docsFolder);
                 CreateMemberContentIfAny(type.Methods, docsFolder);
                 CreateMemberContentIfAny(type.Properties, docsFolder);
                 CreateMemberContentIfAny(type.Events, docsFolder);

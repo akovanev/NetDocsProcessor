@@ -16,6 +16,10 @@ public class PayloadInfo
     // Type
     public bool IsGenericType { get; set; }
     
+    // Field
+    public bool IsConst { get; set; }
+    public bool IsReadOnlyField { get; set; }
+    
     // Method
     public bool? IsAsync { get; set; } 
     public bool? IsExtensionMethod { get; set; }

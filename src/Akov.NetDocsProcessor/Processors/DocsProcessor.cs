@@ -52,6 +52,9 @@ internal class DocsProcessor : IDocsProcessor
                 var constructors = filteredType.PopulateConstructors(typeDescription, symbolObject.Constructors, settings.AccessLevel);
                 typeDescription.Constructors.AddRange(constructors);
                 
+                var fields = filteredType.PopulateFields(typeDescription, symbolObject.Fields, settings.AccessLevel);
+                typeDescription.Fields.AddRange(fields);
+                
                 var methods = filteredType.PopulateMethods(typeDescription, symbolObject.Methods, settings.AccessLevel);
                 typeDescription.Methods.AddRange(methods);
                 
@@ -94,7 +97,8 @@ internal class DocsProcessor : IDocsProcessor
                 {
                     DescriptionHelper.UpdateMembers(typeDescription.Constructors, xmlDoc.Members);
                 }
-                
+               
+                DescriptionHelper.UpdateMembers(typeDescription.Fields, xmlDoc.Members);
                 DescriptionHelper.UpdateMembers(typeDescription.Methods, xmlDoc.Members);
                 DescriptionHelper.UpdateMembers(typeDescription.Properties, xmlDoc.Members);
                 DescriptionHelper.UpdateMembers(typeDescription.Events, xmlDoc.Members);
