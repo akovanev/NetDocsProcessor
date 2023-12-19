@@ -119,6 +119,12 @@ internal static class SymbolExtensions
 
         symbolAsString = AddParametersIfMethod(symbolAsString);
 
+        string? containingType = symbol?.ContainingType.ToString();
+        if (containingType is not null)
+        {
+            symbolAsString = symbolAsString.Replace(containingType, "");
+        }
+
         // Remove namespaces and concat the substrings
         return symbolAsString.WithoutNamespaces();
     }
